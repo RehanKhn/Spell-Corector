@@ -5,20 +5,22 @@ using namespace std;
 #include "Spell.h"
 
 
-
-Spell::Spell()
-{
+int Spell::wordCount() {
+	return words->length();
 }
 
 void Spell::loadDictionary() {
 	ifstream inFile;
 	string word;
-	inFile.open("words.txt");
+	inFile.open("wordsDictionary.txt");
+	int i = 0;
 	while (!inFile.eof()) {
 		inFile >> word;
-		words->append(word);
-		++wordCount;
-		dict.insert(word);
+		words[i]=word;
+		if (!dict.search(word)) {
+			dict.insert(word);
+		}
+		i++;
 	}
 }
 
@@ -56,8 +58,9 @@ int Spell::levenshtein(string s, int sL, string t, int tL) {
 void Spell::spellCorrector(string wrongStr) {
 	string options[20];
 	int optCount = 0;
-	int threshod = 3;
-	for (int i = 0; i < wordCount; i++) {
+	int threshod = 1;
+	int x = wordCount();
+	for (int i = 0; i < x; i++) {
 		int cost = 0;
 		cost = levenshtein(wrongStr, wrongStr.length(), words[i], words[i].length());
 		if (cost <= threshod) {
@@ -65,9 +68,14 @@ void Spell::spellCorrector(string wrongStr) {
 			++optCount;
 		}
 	}
-	cout << "Possible Guesses: \n";
-	for (int i = 0; i <= optCount; i++) {
-		cout << options[i] << endl;
+	if (optCount > 0) {
+		cout << "Possible Guesses: \n";
+		for (int i = 0; i <= optCount; i++) {
+			cout << options[i] << endl;
+		}
+	}
+	else {
+		cout << "Not Guess Found" << endl;
 	}
 }
 

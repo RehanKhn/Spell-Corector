@@ -34,7 +34,23 @@ void BinarySearchTree::insert(string value) {
 }
 
 bool BinarySearchTree::search(string value) {
-	return false;
+	TreeNode* p;
+	p = root;
+	bool found = false;
+
+	while (p != NULL) {
+		if (p->key.compare(value) == 1) {
+			p = p->left;
+		}
+		else if (p->key.compare(value) == -1) {
+			p = p->right;
+		}
+		else {
+			found = true;
+			break;
+		}
+	}
+	return found;
 }
 
 void BinarySearchTree::printInorder(TreeNode* tmp ) {

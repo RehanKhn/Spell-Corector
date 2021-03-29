@@ -6,9 +6,8 @@ class Spell
 {
 public:
 	BinarySearchTree dict;
-	string words[10000];
-	int wordCount;
-	Spell();
+	string words[1000];
+	int wordCount();
 	void loadDictionary();
 	bool spellChecker(string);
 	void spellCorrector(string);
